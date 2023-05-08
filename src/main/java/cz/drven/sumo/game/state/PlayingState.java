@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -72,6 +73,18 @@ public class PlayingState extends State {
             p.setHealth(20.0);
         }
         e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void damagespectate(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player) {
+            final Player p = (Player) e.getDamager();
+            final SumoPlayer sumoPlayer = pl.getGame().getPlayerManager().getPlayer(p.getUniqueId()).get();
+
+            if (sumoPlayer.isSpectating()) {
+                e.setCancelled(true);
+            }
+        }
     }
 
     @EventHandler
