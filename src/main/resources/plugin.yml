@@ -1,0 +1,6 @@
+name: Sumo
+version: '${version}'
+main: cz.drven.sumo.Main
+authors: [ Drven ]
+commands:
+  game:
